@@ -5,11 +5,12 @@ class Modal extends Component {
     window.addEventListener("keydown", this.handleKeyDown);
   }
 
-  componentWillMount() {
+  componentWillUnmount() {
     window.removeEventListener("keydown", this.handleKeyDown);
   }
 
   handleKeyDown = ({ key }) => {
+    // console.log(123)
     if (key === "Escape") {
       this.props.onClose();
     }
@@ -24,10 +25,12 @@ class Modal extends Component {
   backdropRef = createRef();
 
   handleBackdropClick = e => {
+    // console.log(111)
     const { current } = this.backdropRef;
     if (current && e.target !== current) {
       return;
     }
+    if (e.target.nodeName === "IMG") return;
     this.props.onClose();
   };
 
@@ -39,7 +42,7 @@ class Modal extends Component {
         onClick={this.handleBackdropClick}
         ref={this.backdropRef}
       >
-        <div onClick={this.closeByClick} className="Modal">
+        <div className="Modal">
           <img src={url} alt="img" />
         </div>
       </div>
